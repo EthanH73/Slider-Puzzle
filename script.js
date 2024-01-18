@@ -1,6 +1,7 @@
 let moveNum = 0;
 let twoTiles = [];
 let started = false;
+let finished = false;
 
 function moveTile() {
     const tile1 = document.getElementById(`tile${twoTiles[0]}`);
@@ -11,23 +12,25 @@ function moveTile() {
         tile2.textContent = temp;
         moveNum++;
         document.getElementById("moves").textContent = `Moves: ${moveNum}`;
-    }
-    if (started) {
+     }
+     if (started) {
         checkWin();
     }
 }
 
 function clickTile(tileNumber) {
-    twoTiles.push(tileNumber);
-    console.log(tileNumber);
-    console.log(twoTiles);
-    if (twoTiles.length == 2) {
-        if (twoTiles[0] == twoTiles[1]) {
-            twoTiles = []; //reset if they are the same tile is clicked twice
-        }
-        else {
-            moveTile();
-            twoTiles = [];
+    if (finished == false) {
+        twoTiles.push(tileNumber);
+        console.log(tileNumber);
+        console.log(twoTiles);
+        if (twoTiles.length == 2) {
+            if (twoTiles[0] == twoTiles[1]) {
+                twoTiles = []; //reset if they are the same tile is clicked twice
+            }
+            else {
+                moveTile();
+                twoTiles = [];
+            }
         }
     }
 }
@@ -42,10 +45,15 @@ function isAdjacent(tile1, tile2) {
 }
 
 function start() {
-    started = true;
-    alert("You started the game");
-    moveNum = 0;
-    document.getElementById("moves").textContent = `Moves: ${moveNum}`;
+    if (finished == false && started == false) {
+        started = true;
+        alert("You started the game");
+        moveNum = 0;
+        document.getElementById("moves").textContent = `Moves: ${moveNum}`;
+    }
+    else {
+        alert("Press reset to play again");
+    }
 }
 
 function reset() {
@@ -79,6 +87,8 @@ function checkWin() {
 
 function win() {
     alert("You won! Press reset to play again");
+    finished = true;
+    started = false;
 }
 
 function initialize() {
